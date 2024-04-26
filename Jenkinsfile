@@ -32,7 +32,7 @@ pipeline {
         stage('Check if Container is Running') {
             steps {
                 script {
-                    if (sh(returnStatus: true, script: 'docker ps -q -f name=mi-pagina-web').trim() != "") {
+                    if (sh(returnStatus: true, script: 'docker ps -q -f name=yeicob123/mi-pagina-web:latest').trim() != "") {
                         sh 'docker stop mi-pagina-web'
                         sh 'docker rm mi-pagina-web'
                     }
