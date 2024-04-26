@@ -19,10 +19,9 @@ pipeline {
         
         stage('Push to Docker Hub') {
             steps {
-                // Enviar la imagen Docker a Docker Hub
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', '542f9ed4-7e83-44ef-af68-fdd88710b056') {
-                        def imageName = 'yeicob123/mi-pagina-web'
+                        def imageName = 'yeicob123/mi-pagina-web:latest'
                         docker.image(imageName).push()
                     }
                 }
