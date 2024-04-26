@@ -10,11 +10,13 @@ pipeline {
                 }
             }
         }
+        /*
         stage('Test') {
             steps {
                 // Ejecutar pruebas aquí
             }
         }
+        */
         stage('Push to Docker Hub') {
             steps {
                 // Empujar la imagen a Docker Hub
