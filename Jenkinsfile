@@ -35,7 +35,7 @@ pipeline {
                     def containerId = sh(returnStdout: true, script: 'docker ps -aqf "ancestor=yeicob123/mi-pagina-web:latest"').trim()
                     if (containerId) {
                         sh "docker stop $containerId"
-                        sh "docker rmi $containerId"
+                        sh "docker rm $containerId"
                     }
                 }
             }
@@ -44,7 +44,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 // Desplegar la imagen Docker (opcional)
-                sh 'docker pull yeicob123/mi-pagina-web'
+                //sh 'docker pull yeicob123/mi-pagina-web'
                 sh 'docker run -d -p 8000:80 yeicob123/mi-pagina-web:latest'
             }
         }
