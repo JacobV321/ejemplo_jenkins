@@ -29,12 +29,13 @@ pipeline {
             }
         }
 
-        stage('Check if Container is Running') {
+        stage('Stop and Remove Container') {
             steps {
                 script {
-                    if (sh(returnStatus: true, script: 'docker ps -q -f name=yeicob123/mi-pagina-web:latest').trim() != "") {
-                        sh 'docker stop mi-pagina-web'
-                        sh 'docker rm mi-pagina-web'
+                    def containerId = sh(returnStdout: true, script: 'docker ps -aqf "ancestor=yeicob123/mi-pagina-web:latest"').trim()
+                    if (containerId) {
+                        sh "docker stop $containerId"
+                        sh "docker rm $containerId"
                     }
                 }
             }
