@@ -35,7 +35,7 @@ pipeline {
                     def containerId = sh(returnStdout: true, script: 'docker ps -aqf "ancestor=yeicob123/mi-pagina-web:latest"').trim()
                     if (containerId) {
                         sh "docker stop $containerId"
-                        sh "docker rm $containerId"
+                        sh "docker rmi $containerId"
                     }
                 }
             }
