@@ -2,23 +2,15 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
+        stage('Build') {
             steps {
-                checkout scm
+                sh 'docker build -t mi-pagina-web .'
             }
         }
-
         stage('Deploy') {
             steps {
-                // Copia todos los archivos al servidor web
-                sh 'cp -r * /ruta/de/tu/servidor/web'
+                sh 'docker run -d -p 8000:80 mi-pagina-web'
             }
-        }
-    }
-
-    post {
-        always {
-            // Puedes agregar pasos aquí que se ejecutarán siempre, como limpiar recursos temporales
         }
     }
 }
