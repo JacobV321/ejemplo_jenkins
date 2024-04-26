@@ -2,6 +2,22 @@ pipeline {
     agent any
 
     stages {
+
+        stage('Preparation') {
+            steps {
+                script {
+                    // Verificar si existe una imagen con el mismo nombre
+                    def existingImage = sh(returnStdout: true, script: 'docker images -q mi-pagina-web').trim()
+                    if (existingImage) {
+                        echo 'Se encontró una imagen existente con el nombre mi-pagina-web. Eliminando la imagen...'
+                        sh 'docker rmi mi-pagina-web'
+                    } else {
+                        echo 'No se encontró una imagen existente con el nombre mi-pagina-web.'
+                    }
+                }
+            }
+        }
+        
         stage('Checkout') {
             steps {
                 // Este paso clona el repositorio de GitHub en el workspace de Jenkins
