@@ -21,13 +21,16 @@ pipeline {
         stage('Preparation') {
             steps {
                 script {
+                    withCredentials([usernamePassword(credentialsId: '542f9ed4-7e83-44ef-af68-fdd88710b056', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
                     // Verificar si existe una imagen con el mismo nombre
-                    def existingImage = sh(returnStdout: true, script: 'docker images -q mi-pagina-web').trim()
-                    if (existingImage) {
-                        echo 'Se encontró una imagen existente con el nombre mi-pagina-web. Eliminando la imagen...'
-                        sh 'docker rmi mi-pagina-web'
-                    } else {
-                        echo 'No se encontró una imagen existente con el nombre mi-pagina-web.'
+                        def existingImage = sh(returnStdout: true, script: 'docker images -q mi-pagina-web').trim()
+                        if (existingImage) {
+                            echo 'Se encontró una imagen existente con el nombre mi-pagina-web. Eliminando la imagen...'
+                            sh 'docker rmi mi-pagina-web'
+                        } else {
+                            echo 'No se encontró una imagen existente con el nombre mi-pagina-web.'
+                        }
                     }
                 }
             }
