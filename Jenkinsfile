@@ -17,8 +17,8 @@ pipeline {
         stage('Push to Docker Hub') {
             steps {
                 script {
-                    // Listar las imágenes Docker disponibles
-                    sh 'docker images'
+                    // Etiquetar la imagen localmente
+                    sh 'docker tag mi-pagina-web:latest yeicob123/mi-pagina-web:latest'
         
                     withCredentials([usernamePassword(credentialsId: '542f9ed4-7e83-44ef-af68-fdd88710b056', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                         sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
