@@ -1,26 +1,24 @@
-#!/usr/bin/env groovy
-
 pipeline {
+    agent any
 
-    agent {
-        docker {
-            image 'node'
-            args '-u root'
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                // Copia todos los archivos al servidor web
+                sh 'cp -r * /ruta/de/tu/servidor/web'
+            }
         }
     }
 
-    stages {
-        stage('Build') {
-            steps {
-                echo 'Building...'
-                sh 'npm install'
-            }
-        }
-        stage('Test') {
-            steps {
-                echo 'Testing...'
-                sh 'npm test'
-            }
+    post {
+        always {
+            // Puedes agregar pasos aquí que se ejecutarán siempre, como limpiar recursos temporales
         }
     }
 }
