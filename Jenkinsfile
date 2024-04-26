@@ -31,7 +31,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 // Desplegar la imagen Docker (opcional)
-                sh 'docker run -d -p 8000:80 tu-usuario/mi-pagina-web:latest'
+                sh 'docker run -d -p 8000:80 yeicob123/mi-pagina-web:latest'
             }
         }
     }
