@@ -10,10 +10,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                // Construir la imagen Docker
-                script {
-                    docker.build('mi-pagina-web')
-                }
+                sh 'docker build -t mi-pagina-web .'
             }
         }
         
