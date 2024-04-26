@@ -33,16 +33,16 @@ pipeline {
             steps {
                 script {
                     // Verificar si el contenedor está activo
-                    def isRunning = sh(script: 'docker ps -q -f name=mi-pagina-web', returnStatus: true) == 0
+                    def isRunning = sh(script: 'docker ps -q -f name=yeicob123/mi-pagina-web:latest', returnStatus: true) == 0
         
                     // Si el contenedor está activo, detenerlo y borrarlo
                     if (isRunning) {
-                        sh 'docker stop mi-pagina-web'
-                        sh 'docker rm mi-pagina-web'
+                        sh 'docker stop yeicob123/mi-pagina-web:latest'
+                        sh 'docker rm yeicob123/mi-pagina-web:latest'
                     }
         
                     // Desplegar la imagen Docker
-                    sh 'docker run -d -p 8000:80 --name mi-pagina-web yeicob123/mi-pagina-web:latest'
+                    sh 'docker run -d -p 8000:80 yeicob123/mi-pagina-web:latest'
                 }
             }
         }
