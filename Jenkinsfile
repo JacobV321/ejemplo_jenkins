@@ -17,21 +17,22 @@ pipeline {
             }
         }
         
-        stage('Push to Docker Hub') {
-            steps {
-                // Enviar la imagen Docker a Docker Hub
-                script {
-                    docker.withRegistry('https://index.docker.io/v1/', '542f9ed4-7e83-44ef-af68-fdd88710b056') {
-                        def imageName = 'yeicob123/mi-pagina-web'
-                        docker.image(imageName).push()
-                    }
+        script {
+            def dockerImage = docker.build('mi-pagina-web')
+            if (dockerImage != null) {
+                docker.withRegistry('https://index.docker.io/v1/', '542f9ed4-7e83-44ef-af68-fdd88710b056') {
+                    def imageName = 'yeicob123/mi-pagina-web:latest'
+                    dockerImage.tag(imageName)
+                    dockerImage.push()
                 }
+            } else {
+                error "Failed to build Docker image"
             }
         }
         stage('Deploy') {
             steps {
                 // Desplegar la imagen Docker (opcional)
-                sh 'docker run -d -p 8000:80 yeicob123/mi-pagina-web'
+                sh 'docker run -d -p 8000:80 yeicob123/mi-pagina-web:latest'
             }
         }
     }
