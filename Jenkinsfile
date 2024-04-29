@@ -11,6 +11,19 @@ pipeline {
                 }
             }
         }
+
+        stage('Stop and Remove Container') {
+            steps {
+                script {
+                    def containerId = sh(returnStdout: true, script: 'docker ps -aqf "ancestor=yeicob123/mi-pagina-web:latest"').trim()
+                    if (containerId) {
+                        sh "docker stop $containerId"
+                        sh "docker rm $containerId"
+                    }
+                }
+            }
+        }
+
         stage('Build') {
             steps {
                 sh 'docker build -t mi-pagina-web .'
@@ -31,19 +44,7 @@ pipeline {
                 }
             }
         }
-
-        stage('Stop and Remove Container') {
-            steps {
-                script {
-                    def containerId = sh(returnStdout: true, script: 'docker ps -aqf "ancestor=yeicob123/mi-pagina-web:latest"').trim()
-                    if (containerId) {
-                        sh "docker stop $containerId"
-                        sh "docker rm $containerId"
-                    }
-                }
-            }
-        }
-
+        
         stage('Deploy') {
             steps {
                 // Desplegar la imagen Docker (opcional)
