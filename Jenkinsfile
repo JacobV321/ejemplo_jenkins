@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'docker build -t mi-pagina-web .'
+                sh 'docker build --no-cache -t mi-pagina-web .'
             }
         }
         
