@@ -6,6 +6,9 @@ pipeline {
             steps {
                 // Este paso clona el repositorio de GitHub en el workspace de Jenkins
                 git 'https://github.com/JacobV321/ejemplo_jenkins.git'
+                script {
+                    sh 'ls -la'
+                }
             }
         }
         stage('Build') {
